@@ -95,3 +95,22 @@ void printGeneratedSample() {
         cout << records[i].id << " " << records[i].name << " GPA " << fixed << setprecision(2) << records[i].gpa << endl;
     }
 }
+void selectionSort(vector<Student> arr , long long &comparisions, long long &swaps) {
+    comparisions = 0;
+    swaps = 0;
+    int n = arr.size();
+    for (int i = 0; i < n-1; ++i) {
+        int min_idx = i;
+        for (int j = i+1; j < n; ++j) {
+            comparisions++;
+        if (arr[j].gpa < arr[min_idx].gpa) {
+            min_idx = j;
+        }
+        }
+        if (min_idx != i) {
+            swap(arr[i] , arr[min_idx]);
+            swaps++;
+        }
+    }
+}
+
