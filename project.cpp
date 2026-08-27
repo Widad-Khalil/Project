@@ -84,3 +84,14 @@ void printHeader() {
     cout << "Credit Cap (c) : " << credit_cap << endl;
     cout << "------------------------------------------" << endl;
 }
+void printGeneratedSample() {
+    cout << "\n----- Generated Courses Sample -----" << endl;
+    for (int i = 0; i < min(5 , (int)courses.size()); ++i) {
+        cout << courses[i].code << " " << courses[i].name << " " << courses[i].credits << "cr val " 
+              << courses[i].value << "pre:" << courses[i].prereq << endl;
+    }
+    cout << "\n----- Generated Student Records Sample -----" << endl;
+    for (int i = 0; i < min(5 , (int)records.size()); ++i) {
+        cout << records[i].id << " " << records[i].name << " GPA " << fixed << setprecision(2) << records[i].gpa << endl;
+    }
+}
