@@ -147,3 +147,23 @@ void insertionSortTrace(vector<int> arr) {
     }
     cout << " key comparisions : " << comparisions << " shifts : " << shifts <<endl;
 }
+void insertionSort(vector<Student> &arr, long long &comparisons, long long &shifts) {
+    comparisons = 0;
+    shifts = 0;
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        Student key = arr[i];
+        int j = i - 1;
+        while (j >= 0) {
+            comparisons++;
+            if (arr[j].gpa > key.gpa) {
+                arr[j + 1] = arr[j];
+                shifts++;
+                j--;
+            } else  {
+                break;
+            }
+        }
+        arr[j + 1] = key;
+    }
+}
