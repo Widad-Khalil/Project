@@ -167,3 +167,32 @@ void insertionSort(vector<Student> &arr, long long &comparisons, long long &shif
         arr[j + 1] = key;
     }
 }
+void runModule1() {
+    cout << "\n----- Module 1: Selection Sort & Insertion Sort -----" << endl;
+    //Trace Mode for one 10-element array
+    vector<int> trace_arr = {89 ,45 ,68 ,90 ,29 ,75 ,12 ,56 ,17 ,34};
+    insertionSortTrace(trace_arr);
+    //Sorting Student records
+    long long sel_cmp = 0, sel_swaps = 0;
+    long long  ins_cmp = 0, ins_shifts = 0;
+
+    vector<Student> sel_records = records;
+    vector<Student> ins_records = records;
+
+    selectionSort(sel_records, sel_cmp, sel_swaps);
+    insertionSort(ins_records, ins_cmp, ins_shifts);
+
+    records = ins_records; //save it to use it in Binary Search
+    cout << "\n------ Sorting Result -----" << endl;
+    cout << "Selection Sort -> Comparisons: " << sel_cmp << " | Swaps: " << sel_swaps << endl;
+    cout << "Insertion Sort -> Comparisons: " << ins_cmp << " | Shifts: " << ins_shifts << endl;
+
+    bool match = true;
+    for (size_t i = 0; i < sel_records.size(); ++i) {
+        if (abs(sel_records[i].gpa - ins_records[i].gpa) > 1e-6) {
+            match = false;
+            break;
+        }
+    }
+    cout << "Verification: Both sorted lists match? : " << (match ? "Yes" : "NO") << endl;
+}
