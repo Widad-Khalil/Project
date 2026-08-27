@@ -95,6 +95,8 @@ void printGeneratedSample() {
         cout << records[i].id << " " << records[i].name << " GPA " << fixed << setprecision(2) << records[i].gpa << endl;
     }
 }
+
+//module 1:selection sort & insertion sort
 void selectionSort(vector<Student> arr , long long &comparisions, long long &swaps) {
     comparisions = 0;
     swaps = 0;
@@ -113,4 +115,35 @@ void selectionSort(vector<Student> arr , long long &comparisions, long long &swa
         }
     }
 }
+void insertionSortTrace(vector<int> arr) {
+    cout << "\n----- Insertion Sort Trace Mode -----" << endl;
+    cout << "in: ";
+    for (int val : arr) cout << val << " ";
+    cout << endl;
 
+    long long comparisions = 0;
+    long long shifts = 0;
+    int n = arr.size();
+
+    for (int i = 1; i < n; ++i) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0) {
+            comparisions++;
+            if (arr[j] > key) {
+                arr[j + 1] = arr[j];
+                shifts++;
+                j--;
+            } else {
+                break;
+            }
+        }
+        arr[j + 1] = key;
+        
+        for (int k = 0; k < n; ++k) {
+            cout << arr[k] << (k == i ? " | " : " ");
+        }
+        cout << endl;
+    }
+    cout << " key comparisions : " << comparisions << " shifts : " << shifts <<endl;
+}
