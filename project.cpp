@@ -74,3 +74,13 @@ void generateData(int student_id){
         records.push_back(s);
     }
 }
+void printHeader() {
+    cout << "\n----------------------------------------" << endl;
+    cout << "CourseForge - System Data Initialization" << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "Seed           : " << seed << endl;
+    cout << "Courses (n)    : " << num_courses << endl;
+    cout << "Records (m)    : " << num_records << endl;
+    cout << "Credit Cap (c) : " << credit_cap << endl;
+    cout << "------------------------------------------" << endl;
+}
