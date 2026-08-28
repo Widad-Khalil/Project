@@ -289,3 +289,57 @@ void runModule3() {
     }
     cout << endl;
 }
+
+//module 4: Binary Search &  EUCLID'S GCD
+int binarySearch(const vector<Student> &arr, double target_gpa, long long &comparisions ) {
+    comparisions = 0;
+    int low = 0;
+    int high = arr.size() -1;
+    while (low <= high) {
+        int mid = low +(high - low) / 2;
+        comparisions++;
+        if (abs(arr[mid].gpa - target_gpa) < 1e-4) {
+            return mid;
+        }
+        if (arr[mid].gpa < target_gpa) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+int euclidGCD(int a, int b, long long &mod_ops) {
+    mod_ops = 0;
+    while (b != 0){
+        int temp = a % b;
+        mod_ops++;
+        a = b;
+        b = temp;
+    }
+    return a;
+}
+void runModule4(){
+    cout << "\n----- Module 4: Binary Search & Euclid's GCD -----" <<endl;
+    //Binary Search
+    double target = records[records.size() / 2].gpa;
+    long long bs_cmp = 0;
+    int idx = binarySearch(records, target, bs_cmp);
+    cout << "---- Binary Search ----" <<endl;
+    cout << "Searching target GPA : "  << target << endl;
+    cout << "Result               : " << (idx != -1 ? "Found at index" + to_string(idx) : "Not Found!") << endl;
+    cout << "Key Comparisons      : " << bs_cmp << endl;
+    cout <<"Worst Case            : " << (int)floor(log2(records.size())) + 1 <<endl;
+    //Euclid's GCD
+    int num1 = 60;
+    int num2 = 24;
+    long long mod_ops = 0;
+    int gcd_res = euclidGCD(num1, num2, mod_ops);
+    long long lcm_res = (static_cast<long long> (num1) * num2) / gcd_res;
+    cout << "\n---- EUCLID'S GCD & LCM ----" << endl;
+    cout << "Input Numbers  : " << num1 << " and " << num2 << endl;
+    cout << "GCD            : " << gcd_res << endl;
+    cout << "LCM            : " << lcm_res << endl;
+    cout << "MOD Operations : " << mod_ops << endl;
+}
+
