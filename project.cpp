@@ -245,3 +245,47 @@ void runModule2() {
         cout << "Cycle Detected: Unable to schedule all courses" << endl;
     }
 }
+
+//module 3: Best Course Load (Exhaustive Search)
+void runModule3() {
+    cout << "\n----- Module 3: Best Course Load (Exhaustive Search) -----" << endl;
+    int k = min(10, (int)courses.size());
+    int total_subsets = 1 << k; //=2^k
+    int best_value = -1;
+    int best_credits = 0;
+    int best_mask = 0; // best mask(the winning combination)
+    int legal_subsets = 0;
+     
+    for(int mask = 0; mask < total_subsets; ++mask) {
+        int current_credits = 0;
+        int current_value = 0;
+        for (int j = 0; j < k; ++j) {
+            if (mask & (1 << j)) {
+                current_credits += courses[j].credits;
+                current_value += courses[j].value;
+            }
+        }
+        if (current_credits <= credit_cap) {
+            legal_subsets++;
+            if (current_value > best_value) {
+                best_value = current_value;
+                best_credits = current_credits;
+                best_mask = mask ;
+            }
+        }
+    }
+    cout << "Evaluated Courses (k) : " << k << endl;
+    cout<< "Credit Cap (C)         : " << credit_cap << endl;
+    cout << "Total Subsets Checked : " << total_subsets << endl;
+    cout << "Legal Subsets         : " << legal_subsets << endl;
+    cout << "/n----- Winning Course Selection -----" << endl;
+    cout << "Best Subset Value     : " << best_value << endl;
+    cout << "Total Credits Used    : " << best_credits << endl;
+    cout << "Selected Courses      : " ;
+    for (int j = 0; j < k; ++j) {
+        if (best_mask & (1 << j)) {
+            cout << courses[j].code << " ";
+        }
+    }
+    cout << endl;
+}
