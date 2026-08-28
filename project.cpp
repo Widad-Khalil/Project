@@ -196,3 +196,52 @@ void runModule1() {
     }
     cout << "Verification: Both sorted lists match? : " << (match ? "Yes" : "NO") << endl;
 }
+
+//module 2: Topological Sort
+void runModule2() {
+    cout << "\n----- Module 2: Topological Sort -----" << endl;
+    int n = courses.size();
+    vector<int> in_degree(n, 0);
+    for (int i = 0; i < n; ++i) {
+        if (courses[i].prereq != "-") {
+            for (int j = 0; j < n; ++j) {
+                if (courses[j].code == courses[i].prereq) {
+                    in_degree[i]++;
+                    break;
+                }
+            }
+        }
+    }
+    vector<int> order;
+    vector<bool> removed(n, false);
+    for (int step = 0; step < n; ++step) {
+        int zero_source = -1;
+        for (int i = 0; i < n; ++i) {
+            if (!removed[i] && in_degree[i] == 0) {
+                zero_source = i;
+                break;
+            }
+        }
+        if (zero_source == -1) {
+            cout << "Cycle Detected: No legal course order possible! " << endl;
+            return;
+        }
+        removed[zero_source] = true;
+        order.push_back(zero_source);
+
+        for (int i = 0; i < n; ++i) {
+            if (!removed[i] && courses[i].prereq == courses[zero_source].code) {
+                in_degree[i]--;
+            }
+        }
+    }
+    if (order.size() == static_cast<size_t>(n)) {
+        cout << "Valid Prerequisite Ordering Found: " << endl;
+        for (size_t i = 0; i < order.size(); ++i) {
+            cout << courses[order[i]].code << ( i + 1 == order.size() ? "" : " -> ");
+        }
+        cout << endl;
+    } else {
+        cout << "Cycle Detected: Unable to schedule all courses" << endl;
+    }
+}
