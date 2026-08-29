@@ -319,7 +319,7 @@ int euclidGCD(int a, int b, long long &mod_ops) {
     }
     return a;
 }
-void runModule4(){
+void runModule4() {
     cout << "\n----- Module 4: Binary Search & Euclid's GCD -----" <<endl;
     //Binary Search
     double target = records[records.size() / 2].gpa;
@@ -343,3 +343,69 @@ void runModule4(){
     cout << "MOD Operations : " << mod_ops << endl;
 }
 
+//module 5: Theory VS Measured
+void runModule5() {
+    cout << "\n----- Algorithm Analysis (Theory VS Measured) -----" << endl;
+    int base_sizes[5] = {100, 200, 400, 800, 1600};
+    cout << "\n--- Selection Sort VS Insertion Sort(Basic ops: Comparisons) ---" << endl;
+    cout << left << setw(10) << "Size(n)" << setw(18) << "Sel Avg Cmp"
+         << setw(14) << "Sel Ratio" << setw(18) <<"Ins Avg Cmp" << setw(14) << "Ins Ratio" <<endl;
+    double prev_sel = 0, prev_ins = 0;
+
+    for (int size : base_sizes) {
+        long long total_sel_cmp = 0;
+        long long total_ins_cmp = 0;
+        
+        for (int run = 0; run < 3; ++run) {
+            vector<Student> test_data(size);
+            unsigned  int run_seed = static_cast<unsigned int>(seed + size + run * 17);
+            for (int i =0; i < size; ++i) {
+                test_data[i].gpa = 2.0 + (lcg_next(run_seed) % 201) / 100.0;
+            }
+            long long sel_cmp = 0, sel_swaps = 0;
+            long long ins_cmp = 0, ins_shifts = 0;
+            selectionSort(test_data, sel_cmp, sel_swaps);
+            insertionSort(test_data, ins_cmp, ins_shifts);
+            total_sel_cmp += sel_cmp;
+            total_ins_cmp += ins_cmp;
+        }
+        double avg_sel = total_sel_cmp / 3.0;
+        double avg_ins = total_ins_cmp / 3.0;
+        double sel_ratio = (prev_sel > 0) ? (avg_sel / prev_sel) : 0.0;
+        double ins_ratio = (prev_ins > 0) ? (avg_ins / prev_ins) : 0.0;
+        prev_sel = avg_sel;
+        prev_ins = avg_ins;
+
+        cout << left << setw(10) << size << setw(18) << fixed << setprecision(1) <<avg_sel 
+             << setw(14) << setprecision(2) << (sel_ratio > 0 ? to_string(sel_ratio).substr(0, 4) : "-")
+             << setw(18) << setprecision(1) << avg_ins << setw(14) << setprecision(2)
+             << (ins_ratio > 0 ? to_string(ins_ratio).substr(0, 4) : "-") << endl;
+    }
+    cout << "\n---- Binary Search(Basic ops: Key Comparisons) ----" << endl;
+    cout << left << setw(10) << "Size(n)" << setw(18) << "BS Avg Cmp" << setw(14) << "BS Ratio" << endl;
+
+    double prev_bs = 0;
+    for (int size : base_sizes) {
+        long long total_bs_cmp = 0;
+        for (int run = 0; run < 3; ++run) {
+            vector<Student> test_data(size);
+            unsigned int run_seed = static_cast<unsigned int>(seed + size + run * 17);
+            for (int i = 0; i < size; ++i) {
+                test_data[i].gpa = 2.0 + (lcg_next(run_seed) % 201) / 100.0; 
+            }
+            long long unused_c = 0, unused_s = 0;
+            insertionSort(test_data, unused_c, unused_s);
+            
+            long long bs_cmp = 0;
+            double target = test_data[size / 3].gpa;
+            binarySearch(test_data, target, bs_cmp);
+            total_bs_cmp += bs_cmp;
+        }
+        double avg_bs = total_bs_cmp / 3.0;
+        double bs_ratio = (prev_bs > 0) ? (avg_bs / prev_bs) : 0.0;
+        prev_bs = avg_bs;
+
+        cout << left << setw(10) << size << setw(18) << fixed << setprecision(1) << avg_bs << setw(14)
+             << setprecision(2) << (bs_ratio > 0 ? to_string(bs_ratio).substr(0, 4) : "-") << endl;
+    }
+}
