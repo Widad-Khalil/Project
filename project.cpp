@@ -275,10 +275,10 @@ void runModule3() {
         }
     }
     cout << "Evaluated Courses (k) : " << k << endl;
-    cout<< "Credit Cap (C)         : " << credit_cap << endl;
+    cout << "Credit Cap (C)        : " << credit_cap << endl;
     cout << "Total Subsets Checked : " << total_subsets << endl;
     cout << "Legal Subsets         : " << legal_subsets << endl;
-    cout << "/n----- Winning Course Selection -----" << endl;
+    cout << "\n----- Winning Course Selection -----" << endl;
     cout << "Best Subset Value     : " << best_value << endl;
     cout << "Total Credits Used    : " << best_credits << endl;
     cout << "Selected Courses      : " ;
@@ -329,7 +329,7 @@ void runModule4() {
     cout << "Searching target GPA : "  << target << endl;
     cout << "Result               : " << (idx != -1 ? "Found at index" + to_string(idx) : "Not Found!") << endl;
     cout << "Key Comparisons      : " << bs_cmp << endl;
-    cout <<"Worst Case            : " << (int)floor(log2(records.size())) + 1 <<endl;
+    cout << "Worst Case           : " << (int)floor(log2(records.size())) + 1 <<endl;
     //Euclid's GCD
     int num1 = 60;
     int num2 = 24;
@@ -408,4 +408,58 @@ void runModule5() {
         cout << left << setw(10) << size << setw(18) << fixed << setprecision(1) << avg_bs << setw(14)
              << setprecision(2) << (bs_ratio > 0 ? to_string(bs_ratio).substr(0, 4) : "-") << endl;
     }
+}
+//main function
+int main() {
+    int student_id = 2024165; //there is a default number,but you can type your own if you want
+    cout << "Enter your Student ID (or press ENTER for default 2024165): ";
+    string input_id;
+    getline(cin, input_id);
+    if (!input_id.empty()) {
+        student_id = stoi(input_id);
+    }
+    generateData(student_id);
+    printHeader();
+    printGeneratedSample();
+
+    int choice = 0;
+    do {
+        cout << "\n--------------------------------------------------" << endl;
+        cout << "                CourseForge Main Menu              " << endl;
+        cout << "---------------------------------------------------" << endl;
+        cout << "1. Sort Student Records (Selection & Insertion) " << endl;
+        cout << "2. Order Courses (Topological Sort) " << endl;
+        cout << "3. Find Best Course Load (Exhaustive Search) " << endl;
+        cout << "4. Search & Align (Binary Search & EUCLID GCD) " << endl;
+        cout << "5. Algorithm Analysis (Theory VS Measured)  " <<endl;
+        cout << "6. Exit " << endl;
+        cout << "----------------------------------------------------" << endl;
+        cout << "Select an option (1-6): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+             runModule1();
+             break;
+            case 2:
+             runModule2();
+             break;
+            case 3:
+             runModule3();
+             break;
+            case 4:
+             runModule4();
+             break;
+            case 5:
+             runModule5();
+             break;
+            case 6:
+             cout << "Exiting program - Goodbye!" << endl;
+             break;
+            default:
+              cout << "Invalid selection! - Please enter a number between 1 and 6 :)" << endl;
+        }
+    } 
+    while (choice != 6);
+    return 0;
 }
